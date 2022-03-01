@@ -1,0 +1,47 @@
+FROM ubuntu:18.04
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update 
+
+RUN apt-get install libcpprest-dev libboost-all-dev cmake tcl wget unzip -y
+
+RUN apt-get install default-jre openjdk-11-jre-headless openjdk-8-jre-headless -y
+
+RUN apt-get install build-essential software-properties-common -y
+
+RUN add-apt-repository ppa:ubuntu-toolchain-r/test -y
+
+RUN apt-get update
+
+RUN apt-get install gcc-snapshot -y
+
+COPY OpenDDS-3.19.tar.gz /
+
+COPY hvacSimRest_final.zip /
+
+RUN tar -xvf OpenDDS-3.19.tar.gz
+
+WORKDIR OpenDDS-3.19 
+
+RUN ./configure
+
+RUN apt-get update
+
+RUN make
+
+RUN sh setenv.sh
+
+WORKDIR /
+
+RUN unzip hvacSimRest_final.zip
+
+WORKDIR hvacSimRest_modified/bin
+
+RUN rm CMakeCache.txt
+
+RUN cmake ..
+
+RUN make -j4
+
+CMD ["./restSimulator"]
