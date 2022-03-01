@@ -10,7 +10,7 @@ COPY OpenDDS-3.19.tar.gz /
 
 COPY hvacSimRest_final.zip /
 
-RUN tar -xf OpenDDS-3.19.tar.gz
+RUN tar -xzf OpenDDS-3.19.tar.gz
 
 WORKDIR OpenDDS-3.19 
 
