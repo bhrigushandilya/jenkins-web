@@ -30,6 +30,8 @@ WORKDIR /
 
 RUN unzip hvacSimRest_final.zip
 
+RUN rm -rf OpenDDS-3.19.tar.gz hvacSimRest_final.zip
+
 WORKDIR hvacSimRest_modified/bin
 
 RUN rm CMakeCache.txt
@@ -37,5 +39,9 @@ RUN rm CMakeCache.txt
 RUN cmake ..
 
 RUN make -j4
+
+WORKDIR /hvacSimRest_modified
+
+RUN rm -rf src include
 
 CMD ["./restSimulator"]
