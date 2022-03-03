@@ -44,4 +44,6 @@ WORKDIR /hvacSimRest_modified
 
 RUN rm -rf src include
 
+WORKDIR bin
+
 CMD ["./restSimulator"]
